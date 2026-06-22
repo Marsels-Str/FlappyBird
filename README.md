@@ -11,5 +11,6 @@ Soļi, kā dabūt šo projektu sev lokāli (iepriekšejas zināšanas ir nepieci
 3. Tad vienkārši izpildīt secīgi - composer install "un" npm install
 
 Lai iegūtu datubāzi atvērt projektu caur koda redaktoru (Visual studio code) un nokopēt .env.example failu vai vienkārši pārsaukt to par .env un atkomentēt datubāzes sadaļu (DB).
+Protams, kad vajag savadīt savus datubāzes parametrus, ja ir iepriekš izveidota, ja nav tad to tāpāt izdarīt!
 1. Tad terminālī - php artisan migrate
 2. Lai palaistu projektu - composer run dev
