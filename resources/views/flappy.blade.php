@@ -1,139 +1,110 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Flappy Bird</title>
-    <style>
-        html, body { 
-            margin: 0;
-             padding: 0; 
-            }
-        canvas { 
-            display: block;
-            margin: 0 auto;
-            background: #70c5ce;
-            width: 450px;
-            height: 100vh;
-            touch-action: manipulation;
-        }
-        @media (min-width: 420px) {
-            canvas {
-                width: 1500px;  
-                height: 100vh;
-            }
-        }
-        #saveScorePopup button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background: #70c5ce;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            color: white;
-            margin-top: 10px;
-        }
-        #saveScorePopup {
-            border-radius: 10px;
-        }
-    </style>
-</head>
-<body>
-    <canvas id="flappyBird" width="650" height="700"></canvas>
+<x-app-layout>
+    <div class="h-[calc(100dvh-4rem-1px)] overflow-hidden bg-gradient-to-br from-sky-300 to-cyan-100 flex items-center justify-center">
 
-    <div id="startScreen" style="
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: white;
-        border: 3px solid #222;
-        border-radius: 10px;
-        padding: 20px 30px;
-        text-align: center;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        font-family: Arial, sans-serif;
-        z-index: 999;
-    ">
-        <h2>Flappy Bird</h2>
+        <div class="relative w-full max-w-5xl flex justify-center">
 
-        <label for="birdSkinSelector">Choose your Skin:</label>
-        <select id="birdSkinSelector">
-        <option value="/images/Yellow-Flappy-Bird.png">Classic</option>
-        <option value="/images/Red-Flappy-Bird.png">Red Bird</option>
-        <option value="/images/Blue-Flappy-Bird.png">Blue Bird</option>
-        <option value="/images/Green-Flappy-Bird.png">Green Bird</option>
-        </select>
+            <canvas
+                id="flappyBird"
+                width="650"
+                height="700"
+                class="bg-[#70c5ce] rounded-xl shadow-2xl w-full max-w-[650px] h-auto touch-manipulation"
+            ></canvas>
 
-        <p>Click Start to Play!</p>
-        <button onclick="startGame()" style="
-            padding: 10px 20px;
-            font-size: 16px;
-            background: #70c5ce;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            color: white;
-        ">Start</button>
-        <button id="backToDashboardBtn" onclick="goToDashboard()" style="
-            padding: 10px 20px;
-            font-size: 16px;
-            background: #70c5ce;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            color: white;
-        ">Back</button>
-    </div>
+            <div id="startScreen"
+                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white border-2 border-gray-700 rounded-xl p-6 text-center shadow-2xl z-50 w-[90%] max-w-sm">
 
-    <div id="gameOverPopup" style="
-        display: none;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: white;
-        border: 3px solid #222;
-        border-radius: 10px;
-        padding: 20px 30px;
-        text-align: center;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        font-family: Arial, sans-serif;
-        z-index: 999;
-    ">
-        <h2>Game Over</h2>
+                <h2 class="text-2xl font-bold mb-4">Flappy Bird</h2>
 
-        <p id="finalScore"></p>
-        <button onclick="restartGame()" style="
-            padding: 10px 20px;
-            font-size: 16px;
-            background: #70c5ce;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            color: white;
-        ">Restart</button>
+                <label for="birdSkinSelector" class="block mb-2">
+                    Choose your Skin:
+                </label>
 
-        <button onclick="goBackToStart()" style="
-            padding: 10px 20px;
-            font-size: 16px;
-            background: #70c5ce;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            color: white;
-        ">Back</button>
-    </div>
+                <select
+                    id="birdSkinSelector"
+                    class="w-full border rounded p-2 mb-4"
+                >
+                    <option value="/images/Yellow-Flappy-Bird.png">Classic</option>
+                    <option value="/images/Red-Flappy-Bird.png">Red Bird</option>
+                    <option value="/images/Blue-Flappy-Bird.png">Blue Bird</option>
+                    <option value="/images/Green-Flappy-Bird.png">Green Bird</option>
+                </select>
 
-    <div id="saveScorePopup" style="display: none; position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%);
-        background: white; padding: 20px; border: 2px solid black; z-index: 10; border-radius: 10px;">
-        <h3>Save Your Score</h3>
-        <p>Your Score: <span id="popupScoreDisplay"></span></p>
-        <input type="text" id="playerNameInput" placeholder="Enter your name" style="width: 100%; margin-bottom: 10px;" />
-        <button onclick="submitFinalScore()">Submit</button>
-        <button onclick="closeScorePopup()">Cancel</button>
+                <p class="mb-4">Click Start to Play!</p>
+
+                <div class="flex gap-3 justify-center">
+                    <button
+                        onclick="startGame()"
+                        class="px-5 py-2 bg-cyan-500 hover:bg-cyan-600 text-white rounded"
+                    >
+                        Start
+                    </button>
+                </div>
+            </div>
+
+            <div id="gameOverPopup"
+                class="hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white border-2 border-gray-700 rounded-xl p-6 text-center shadow-2xl z-50 w-[90%] max-w-sm">
+
+                <h2 class="text-2xl font-bold mb-4">
+                    Game Over
+                </h2>
+
+                <p id="finalScore" class="mb-4"></p>
+
+                <div class="flex gap-3 justify-center">
+                    <button
+                        onclick="restartGame()"
+                        class="px-5 py-2 bg-cyan-500 hover:bg-cyan-600 text-white rounded"
+                    >
+                        Restart
+                    </button>
+
+                    <button
+                        onclick="goBackToStart()"
+                        class="px-5 py-2 bg-slate-500 hover:bg-slate-600 text-white rounded"
+                    >
+                        Back
+                    </button>
+                </div>
+            </div>
+
+            <div id="saveScorePopup"
+                class="hidden absolute top-[30%] left-1/2 -translate-x-1/2 bg-white border-2 border-black rounded-xl p-6 shadow-2xl z-50 w-[90%] max-w-sm">
+
+                <h3 class="text-xl font-bold mb-3">
+                    Save Your Score
+                </h3>
+
+                <p class="mb-3">
+                    Your Score:
+                    <span id="popupScoreDisplay"></span>
+                </p>
+
+                <input
+                    type="text"
+                    id="playerNameInput"
+                    placeholder="Enter your name"
+                    class="w-full border rounded p-2 mb-3"
+                >
+
+                <div class="flex gap-3 justify-center">
+                    <button
+                        onclick="submitFinalScore()"
+                        class="px-5 py-2 bg-cyan-500 hover:bg-cyan-600 text-white rounded"
+                    >
+                        Submit
+                    </button>
+
+                    <button
+                        onclick="closeScorePopup()"
+                        class="px-5 py-2 bg-slate-500 hover:bg-slate-600 text-white rounded"
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </div>
+
+        </div>
     </div>
 
     <script src="{{ asset('js/flappy.js') }}"></script>
-</body>
-</html>
+</x-app-layout>

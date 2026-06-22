@@ -229,10 +229,6 @@ if (canvas) {
         document.getElementById('startScreen').style.display = 'block';
     }
 
-    function goToDashboard() {
-        window.location.href = '/dashboard';
-    }
-
     // Input listeners
     document.addEventListener('keydown', function (e) {
         if (isGameStarted && !gameOver) {
@@ -266,6 +262,5 @@ if (canvas) {
     window.startGame = startGame;
     window.restartGame = restartGame;
     window.goBackToStart = goBackToStart;
-    window.goToDashboard = goToDashboard;
     window.closeScorePopup = closeScorePopup;
 }
